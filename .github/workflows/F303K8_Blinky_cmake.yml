@@ -31,7 +31,7 @@ jobs:
     - name: Download toolchain
       shell: bash
       working-directory: "${{ env.TOOLCHAIN_DIR }}"
-      run: wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.exe
+      run: curl -fsSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.exe -o gcc-arm-none-eabi-10-2020-q4-major-win32.exe
 
     - name: Configure CMake
       working-directory: ${{ env.WORK_DIR }}
