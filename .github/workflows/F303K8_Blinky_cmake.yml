@@ -20,8 +20,8 @@ jobs:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Make toolchain dir
-      run: mkdir "${{ env.TOOLCHAIN_DIR }}"
+    - name: Make toolchain root dir
+      run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
 
     - name: Download toolchain zip
       shell: bash
@@ -37,6 +37,11 @@ jobs:
       shell: bash
       working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
       run:  mv gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
+
+    - name: Check toolchain
+      shell: bash
+      working-directory: "${{ env.TOOLCHAIN_DIR }}"
+      run:  ls
 
     - name: Configure CMake
       shell: bash
