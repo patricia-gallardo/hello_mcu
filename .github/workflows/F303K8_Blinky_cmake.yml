@@ -26,10 +26,10 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Make toolchain dir
-      run: mkdir ${{ env.TOOLCHAIN_DIR }}
+      run: mkdir "${{ env.TOOLCHAIN_DIR }}"
 
     - name: Download toolchain
-      working-directory: ${{ env.WORK_DIR }}
+      working-directory: "${{ env.TOOLCHAIN_DIR }}"
       run: wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.exe
 
     - name: Configure CMake
