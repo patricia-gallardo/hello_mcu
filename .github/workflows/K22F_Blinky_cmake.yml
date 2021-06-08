@@ -1,4 +1,4 @@
-name: CMake
+name: K22F_Blinky_cmake
 
 on:
   push:
