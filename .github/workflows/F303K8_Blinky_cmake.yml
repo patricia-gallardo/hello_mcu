@@ -45,14 +45,14 @@ jobs:
 
     - name: Configure CMake
       working-directory: ${{ env.WORK_DIR }}
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE="arm-none-eabi-gcc.cmake" -DCMAKE_MAKE_PROGRAM=ninja.exe  -G "Ninja"
+      run: cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE="arm-none-eabi-gcc.cmake" -DCMAKE_MAKE_PROGRAM=ninja.exe  -G "Ninja"
 
     - name: Build
       shell: bash
       working-directory: ${{ env.WORK_DIR }}
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Test
       shell: bash
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{ env.WORK_DIR }}/build
       run: ctest -C ${{env.BUILD_TYPE}}
