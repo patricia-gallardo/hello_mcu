@@ -18,6 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Make toolchain dir
       run: mkdir "${{ env.TOOLCHAIN_DIR }}"
