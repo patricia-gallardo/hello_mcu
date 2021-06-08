@@ -10,6 +10,9 @@ env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
+  TOOLCHAIN_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
+
+# https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.exe
 
 jobs:
   build:
@@ -21,6 +24,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Make toolchain dir
+      run: mkdir ${{ env.TOOLCHAIN_DIR }}
+
+    - name: Download toolchain
+      working-directory: ${{ env.WORK_DIR }}
+      run: wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.exe
 
     - name: Configure CMake
       working-directory: ${{ env.WORK_DIR }}
