@@ -32,8 +32,9 @@ jobs:
       run: Expand-Archive -Path gcc-arm-none-eabi-10-2020-q4-major-win32.zip
 
     - name: Move toolchain
+      shell: bash
       working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
-      run:  mv .\gcc-arm-none-eabi-10-2020-q4-major-win32\gcc-arm-none-eabi-10-2020-q4-major 10 2020-q4-major
+      run:  mv gcc-arm-none-eabi-10-2020-q4-major-win32/gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
 
     - name: Configure CMake
       working-directory: ${{ env.WORK_DIR }}
