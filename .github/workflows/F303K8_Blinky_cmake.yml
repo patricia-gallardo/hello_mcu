@@ -37,13 +37,16 @@ jobs:
       run:  mv gcc-arm-none-eabi-10-2020-q4-major-win32/gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
 
     - name: Configure CMake
+      shell: bash
       working-directory: ${{ env.WORK_DIR }}
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE="arm-none-eabi-gcc.cmake" -DCMAKE_MAKE_PROGRAM=ninja.exe  -G "Ninja"
 
     - name: Build
+      shell: bash
       working-directory: ${{ env.WORK_DIR }}
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Test
+      shell: bash
       working-directory: ${{github.workspace}}/build
       run: ctest -C ${{env.BUILD_TYPE}}
