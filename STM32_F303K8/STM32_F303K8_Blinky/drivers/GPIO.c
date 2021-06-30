@@ -6,7 +6,7 @@
  * This module implements the GPIO (General Purpose Input/Output) driver.
  */
 
-#include "Platform.h"
+#include "platform.h"
 #include "GPIO.h"
 #include "stm32f3xx_hal.h"
 

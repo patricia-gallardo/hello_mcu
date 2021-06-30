@@ -6,7 +6,7 @@
  * This module implements the DAC (Digital to Digital Converter) driver.
  */
 
-#include "Platform.h"
+#include "platform.h"
 #include "DAC.h"
 #include "stm32f3xx_hal.h"
 

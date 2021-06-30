@@ -6,7 +6,7 @@
  * This module implements the RTOS hooks and initialization routines.
  */
 
-#include "Platform.h"
+#include "platform.h"
 #if PL_CONFIG_USE_FREERTOS
 #include "RTOS.h"
 #include "McuRTOS.h"

@@ -6,7 +6,7 @@
  * This module implements functions for the Pins (switches, push buttons and tilt switch).
  */
 
-#include "Platform.h"
+#include "platform.h"
 #include "Pin.h"
 #include <stdbool.h>
 #if PL_CONFIG_BOARD==PL_CONFIG_BOARD_ID_STM32_NUCLEO

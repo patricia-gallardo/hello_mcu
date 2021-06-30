@@ -7,7 +7,7 @@
  */
 
 
-#include "Platform.h"
+#include "platform.h"
 #include "ADC.h"
 #include "stm32f3xx_hal.h"
 

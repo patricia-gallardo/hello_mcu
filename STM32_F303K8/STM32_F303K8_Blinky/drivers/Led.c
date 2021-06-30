@@ -6,7 +6,7 @@
  * This module implements functions for the LEDs.
  */
 
-#include "Platform.h"
+#include "platform.h"
 #include "Led.h"
 #include <stdbool.h>
 #if PL_CONFIG_BOARD==PL_CONFIG_BOARD_ID_STM32_NUCLEO

@@ -6,7 +6,7 @@
  * This module implements to functions to use the speaker.
  */
 
-#include "Platform.h"
+#include "platform.h"
 #include "Speaker.h"
 #include "DAC.h"
 #include "McuWait.h"
