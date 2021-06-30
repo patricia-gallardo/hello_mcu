@@ -8,9 +8,6 @@ on:
 
   workflow_dispatch:
 
-env:
-  WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
-
 jobs:
   build:
     name: "${{ matrix.conf.name }} | ${{ matrix.cmake-build-type }}"
@@ -45,15 +42,13 @@ jobs:
 
       - name: Configure CMake
         shell: bash
-        working-directory: "${{ env.WORK_DIR }}"
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} -DARM_TOOLCHAIN_DIR="${{ steps.arm.outputs.install_dir }}" -DCMAKE_MAKE_PROGRAM=ninja${{ matrix.conf.host_executable_suffix}}  -G "Ninja"
 
       - name: Build
         shell: bash
-        working-directory: "${{ env.WORK_DIR }}"
         run: cmake --build build --config ${{ matrix.cmake-build-type }}
 
       - name: Test
         shell: bash
-        working-directory: "${{ env.WORK_DIR }}/build"
+        working-directory: build
         run: ctest -C ${{ matrix.cmake-build-type }}
