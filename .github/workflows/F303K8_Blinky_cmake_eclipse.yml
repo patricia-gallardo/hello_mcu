@@ -9,6 +9,7 @@ on:
 env:
   BUILD_TYPE: Release
   WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
+  WORKSPACE: ${{ github.workspace }}/..
   TOOLCHAIN_ROOT_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
   TOOLCHAIN_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
 
@@ -19,6 +20,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Print github workspace
+      run: |
+        echo "GITHUB_WORKSPACE = $GITHUB_WORKSPACE"
+        echo "github.workspace = ${{ github.workspace }}"
+        echo "WORKSPACE = ${{ env.WORKSPACE }}"
 
     - name: Make toolchain root dir
       run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
