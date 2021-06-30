@@ -1,0 +1,59 @@
+name: F303K8_Blinky_cmake Eclipse
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  BUILD_TYPE: Release
+  WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
+  TOOLCHAIN_ROOT_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
+  TOOLCHAIN_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Make toolchain root dir
+      run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
+
+    - name: Download toolchain zip
+      shell: bash
+      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
+      run: curl -fsSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.zip -o gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+
+    - name: Unzip toolchain
+      shell: bash
+      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
+      run: unzip gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+
+    - name: Move toolchain
+      shell: bash
+      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
+      run:  mv gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
+
+    - name: Check toolchain
+      shell: bash
+      working-directory: "${{ env.TOOLCHAIN_DIR }}"
+      run: ./arm-none-eabi-gcc.exe --version
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{ env.WORK_DIR }}
+      run: cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE="arm-none-eabi-gcc.cmake" -DCMAKE_MAKE_PROGRAM=ninja.exe  -G "Ninja"
+
+    - name: Build
+      shell: bash
+      working-directory: ${{ env.WORK_DIR }}
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      shell: bash
+      working-directory: ${{ env.WORK_DIR }}/build
+      run: ctest -C ${{env.BUILD_TYPE}}
