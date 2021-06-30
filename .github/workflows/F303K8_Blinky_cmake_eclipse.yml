@@ -9,7 +9,7 @@ on:
 env:
   BUILD_TYPE: Release
   WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
-  WORKSPACE: ${{ github.workspace }}/..
+  WORKSPACE: ${{ github.workspace }}
   TOOLCHAIN_ROOT_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
   TOOLCHAIN_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
 
