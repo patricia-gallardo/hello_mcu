@@ -64,7 +64,7 @@ set(SRC_FILES
 
        McuLib/src/McuLib.c
        McuLib/src/McuGPIO.c
-       McuLib/src/McuLed.c
+       McuLib/src/McuLED.c
        McuLib/src/McuArmTools.c
        McuLib/src/McuWait.c
        McuLib/src/McuUtility.c
