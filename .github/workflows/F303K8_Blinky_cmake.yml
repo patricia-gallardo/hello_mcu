@@ -21,16 +21,12 @@ jobs:
         conf:
           - name: Windows 2019
             os: windows-2019
-#            toolchain_root_dir: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
-#            toolchain_dir: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
             host_executable_suffix: ".exe"
           - name: Ubuntu 20.04
             os: ubuntu-20.04
-#            toolchain_dir: "/usr/bin"
             host_executable_suffix: ""
           - name: MacOS 10.15
             os: macos-10.15
-#            toolchain_dir: "/usr/local/bin"
             host_executable_suffix: ""
         cmake-build-type: [ Debug, Release ]
 
@@ -39,7 +35,6 @@ jobs:
       - uses: turtlesec-no/get-ninja@1.0.0
       
       - name: Get Arm Toolchain
-        shell: bash
         id: arm
         uses: turtlesec-no/get-arm-toolchain@main
 
