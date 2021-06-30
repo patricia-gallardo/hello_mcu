@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: seanmiddleditch/gha-setup-ninja@master
+    - uses: turtlesec-no/get-ninja@main
 
     - name: Make toolchain root dir
       run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
