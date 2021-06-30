@@ -6,7 +6,7 @@
  * This module implements the board support package.
  */
 
-#include "Platform.h"
+// #include "Platform.h"
 #include "Board.h"
 #include "stm32f3xx_hal.h"
 #include "ADC.h"
