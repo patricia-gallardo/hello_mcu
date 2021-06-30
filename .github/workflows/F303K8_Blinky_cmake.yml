@@ -38,10 +38,6 @@ jobs:
         id: arm
         uses: turtlesec-no/get-arm-toolchain@main
 
-      - name: Print the toolchain
-        shell: bash
-        run: echo "${{ steps.arm.outputs.install_dir }}"
-
       - name: Test the toolchain
         shell: bash
         working-directory: "${{ steps.arm.outputs.install_dir }}"
