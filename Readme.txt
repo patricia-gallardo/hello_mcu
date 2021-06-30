@@ -1,3 +1,5 @@
+[![CMake Ninja](https://github.com/patricia-gallardo/hello_mcu/actions/workflows/cmake_ninja.yml/badge.svg)](https://github.com/patricia-gallardo/hello_mcu/actions/workflows/cmake_ninja.yml)
+
 This folder contains examples using Microsoft Visual Studio Code.
 
 See following links for articles about it:
