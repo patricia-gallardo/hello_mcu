@@ -40,7 +40,7 @@ jobs:
 
       - name: Print the toolchain
         shell: bash
-        run: echo "ARM_TOOLCHAIN_DIR: ${{ steps.arm.outputs.install_dir }}"
+        run: echo "${{ steps.arm.outputs.install_dir }}"
 
       - name: Test the toolchain
         shell: bash
