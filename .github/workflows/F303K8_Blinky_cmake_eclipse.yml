@@ -20,9 +20,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Print github object
-      run: echo "github = ${{ toJSON(github) }}"
-
     - name: Make toolchain root dir
       run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
 
