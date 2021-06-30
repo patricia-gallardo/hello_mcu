@@ -46,7 +46,9 @@ jobs:
         run: echo "Arm Toolchain version was '${{ steps.arm.outputs.version }}'"
 
       - name: Where is the Arm Toolchain?
-        run: echo "Arm Toolchain is at '${{ steps.arm.outputs.install_dir }}'"
+        run: |
+          echo "Arm Toolchain is at '${{ steps.arm.outputs.install_dir }}'"
+          echo "TOOLCHAIN_DIR=${{ steps.arm.outputs.install_dir }}" >> $GITHUB_ENV
 
       - name: Windows - Make toolchain root dir
         if: startsWith(matrix.conf.os, 'windows')
