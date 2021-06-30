@@ -1,4 +1,4 @@
-name: F303K8_Blinky_cmake
+name: CMake Ninja
 
 on:
   push:
@@ -6,54 +6,70 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  BUILD_TYPE: Release
-  WORK_DIR: STM32_F303K8/STM32_F303K8_Blinky
-  TOOLCHAIN_ROOT_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
-  TOOLCHAIN_DIR: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest
+    name: "${{ matrix.conf.name }} | ${{ matrix.cmake-build-type }}"
+    runs-on: ${{ matrix.conf.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        conf:
+          - name: Windows 2019
+            os: windows-2019
+            toolchain_root_dir: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/"
+            toolchain_dir: "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2020-q4-major/bin"
+            host_executable_suffix: ".exe"
+          - name: Ubuntu 20.04
+            os: ubuntu-20.04
+            toolchain_dir: "/usr/bin"
+            host_executable_suffix: ""
+          - name: MacOS 10.15
+            os: macos-10.15
+            toolchain_dir: "/usr/local/bin"
+            host_executable_suffix: ""
+        cmake-build-type: [ Debug, Release ]
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: actions/checkout@v2
+      - uses: turtlesec-no/get-ninja@1.0.0
 
-    - name: Make toolchain root dir
-      run: mkdir "${{ env.TOOLCHAIN_ROOT_DIR }}"
+      - name: Windows - Make toolchain root dir
+        if: startsWith(matrix.conf.os, 'windows')
+        run: mkdir "${{ matrix.conf.toolchain_root_dir}}"
 
-    - name: Download toolchain zip
-      shell: bash
-      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
-      run: curl -fsSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.zip -o gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+      - name: Windows - Get the toolchain
+        if: startsWith(matrix.conf.os, 'windows')
+        shell: bash
+        working-directory: "${{ matrix.conf.toolchain_root_dir}}"
+        run: |
+          curl -fsSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.zip -o gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+          unzip gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+          mv gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
 
-    - name: Unzip toolchain
-      shell: bash
-      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
-      run: unzip gcc-arm-none-eabi-10-2020-q4-major-win32.zip
+      - name: Ubuntu - Get the toolchain
+        if: startsWith(matrix.conf.os, 'ubuntu')
+        run: sudo apt-get -y install gcc-arm-none-eabi
 
-    - name: Move toolchain
-      shell: bash
-      working-directory: "${{ env.TOOLCHAIN_ROOT_DIR }}"
-      run:  mv gcc-arm-none-eabi-10-2020-q4-major 10\ 2020-q4-major
+      - name: MacOS - Get the toolchain
+        if: startsWith(matrix.conf.os, 'macos')
+        run: brew install --cask gcc-arm-embedded
 
-    - name: Check toolchain
-      shell: bash
-      working-directory: "${{ env.TOOLCHAIN_DIR }}"
-      run: ./arm-none-eabi-gcc.exe --version
+      - name: Test the toolchain
+        shell: bash
+        working-directory: "${{ matrix.conf.toolchain_dir}}"
+        run: ./arm-none-eabi-gcc${{ matrix.conf.host_executable_suffix}} --version
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{ env.WORK_DIR }}
-      run: cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE="arm-none-eabi-gcc.cmake" -DCMAKE_MAKE_PROGRAM=ninja.exe  -G "Ninja"
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} -DARM_TOOLCHAIN_DIR="${{ matrix.conf.toolchain_dir}}" -DCMAKE_MAKE_PROGRAM=ninja${{ matrix.conf.host_executable_suffix}}  -G "Ninja"
 
-    - name: Build
-      shell: bash
-      working-directory: ${{ env.WORK_DIR }}
-      run: cmake --build build --config ${{env.BUILD_TYPE}}
+      - name: Build
+        shell: bash
+        run: cmake --build build --config ${{ matrix.cmake-build-type }}
 
-    - name: Test
-      shell: bash
-      working-directory: ${{ env.WORK_DIR }}/build
-      run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Test
+        shell: bash
+        working-directory: build
+        run: ctest -C ${{ matrix.cmake-build-type }}
