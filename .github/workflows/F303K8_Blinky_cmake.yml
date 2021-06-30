@@ -37,6 +37,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: turtlesec-no/get-ninja@1.0.0
+      
+      - name: Get Arm Toolchain
+        id: arm
+        uses: turtlesec-no/get-arm-toolchain@main
+
+      - name: Did we get Arm Toolchain?
+        run: echo "Arm Toolchain version was '${{ steps.arm.outputs.version }}'"
+
+      - name: Where is the Arm Toolchain?
+        run: echo "Arm Toolchain is at '${{ steps.arm.outputs.install_dir }}'"
 
       - name: Windows - Make toolchain root dir
         if: startsWith(matrix.conf.os, 'windows')
