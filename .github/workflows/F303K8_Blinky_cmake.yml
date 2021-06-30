@@ -39,17 +39,10 @@ jobs:
       - uses: turtlesec-no/get-ninja@1.0.0
       
       - name: Get Arm Toolchain
+        shell: bash
         id: arm
         uses: turtlesec-no/get-arm-toolchain@main
-
-      - name: Did we get Arm Toolchain?
-        run: echo "Arm Toolchain version was '${{ steps.arm.outputs.version }}'"
-
-      - name: Where is the Arm Toolchain?
-        shell: bash
-        run: |
-          echo "Arm Toolchain is at '${{ steps.arm.outputs.install_dir }}'"
-          echo "TOOLCHAIN_DIR=${{ steps.arm.outputs.install_dir }}" >> $GITHUB_ENV
+        run: echo "TOOLCHAIN_DIR=${{ steps.arm.outputs.install_dir }}" >> $GITHUB_ENV
 
       - name: Test the toolchain
         shell: bash
