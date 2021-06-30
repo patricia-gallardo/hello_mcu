@@ -18,7 +18,7 @@ static void BlinkyTask(void *p) {
   }
 }
 
-cc
+//cc
 
 static int i;
 

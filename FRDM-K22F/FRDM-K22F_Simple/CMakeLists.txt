@@ -1,16 +1,7 @@
-# CMake file for FRDM-K22F_Simple
-cmake_minimum_required(VERSION 3.15.3)
-
-# Optional: print out extra messages to see what is going on. Comment it to have less verbose messages
-set(CMAKE_VERBOSE_MAKEFILE ON)
-
-# Path to toolchain file. This one has to be before 'project()' below
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arm-none-eabi-gcc.cmake)
-
 # Setup project, output and linker file
-project(FRDM-K22F_Simple)
-set(EXECUTABLE ${PROJECT_NAME}.elf)
-set(LINKER_FILE ${CMAKE_SOURCE_DIR}/device/MK22FN512xxx12_flash.ld)
+set(TARGET_NAME FRDM-K22F_Simple)
+set(EXECUTABLE ${TARGET_NAME}.elf)
+set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/device/MK22FN512xxx12_flash.ld)
 
 enable_language(C ASM)
 set(CMAKE_C_STANDARD 99)
@@ -69,7 +60,7 @@ target_link_options(${EXECUTABLE} PRIVATE
         -specs=nosys.specs
         -lc
         -lm
-        -Wl,-Map=${PROJECT_NAME}.map,--cref
+        -Wl,-Map=${TARGET_NAME}.map,--cref
         -Wl,--gc-sections
         -Xlinker -print-memory-usage -Xlinker
         )
@@ -82,6 +73,6 @@ add_custom_command(TARGET ${EXECUTABLE}
 # Optional: Create hex, bin and S-Record files after the build
 add_custom_command(TARGET ${EXECUTABLE}
         POST_BUILD
-        COMMAND ${CMAKE_OBJCOPY} -O srec --srec-len=64 ${EXECUTABLE} ${PROJECT_NAME}.s19
-        COMMAND ${CMAKE_OBJCOPY} -O ihex ${EXECUTABLE} ${PROJECT_NAME}.hex
-        COMMAND ${CMAKE_OBJCOPY} -O binary ${EXECUTABLE} ${PROJECT_NAME}.bin)
+        COMMAND ${CMAKE_OBJCOPY} -O srec --srec-len=64 ${EXECUTABLE} ${TARGET_NAME}.s19
+        COMMAND ${CMAKE_OBJCOPY} -O ihex ${EXECUTABLE} ${TARGET_NAME}.hex
+        COMMAND ${CMAKE_OBJCOPY} -O binary ${EXECUTABLE} ${TARGET_NAME}.bin)

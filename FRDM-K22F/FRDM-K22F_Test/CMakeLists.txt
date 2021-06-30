@@ -1,9 +1,3 @@
-
-cmake_minimum_required(VERSION 3.10)
-
-# set the project name and version
-project(MyProject VERSION 1.0)
-
 # add the executable
 add_executable(MyProject main.c)
 
@@ -13,6 +7,6 @@ add_executable(MyProject main.c)
 #                           "${PROJECT_BINARY_DIR}"
 #                           )
 
-set(LINKER_SCRIPT "../linker.ld")
+set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/linker.ld)
 
 include(cmake/efr32mg.cmake)
