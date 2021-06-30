@@ -46,6 +46,7 @@ jobs:
         run: echo "Arm Toolchain version was '${{ steps.arm.outputs.version }}'"
 
       - name: Where is the Arm Toolchain?
+        shell: bash
         run: |
           echo "Arm Toolchain is at '${{ steps.arm.outputs.install_dir }}'"
           echo "TOOLCHAIN_DIR=${{ steps.arm.outputs.install_dir }}" >> $GITHUB_ENV
