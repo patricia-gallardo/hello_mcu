@@ -26,12 +26,12 @@ set(SRC_FILES
         src/platform.c
         src/Shell.c
 
-        drivers/board.c
+        drivers/Board.c
         drivers/ADC.c
         drivers/DAC.c
         drivers/GPIO.c
-        drivers/led.c
-        drivers/pin.c 
+        drivers/Led.c
+        drivers/Pin.c 
         drivers/RTOS.c
         drivers/Speaker.c 
         drivers/Timer.c 
