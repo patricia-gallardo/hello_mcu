@@ -22,8 +22,11 @@ jobs:
           - name: Ubuntu 20.04
             os: ubuntu-20.04
             host_executable_suffix: ""
-          - name: MacOS 10.15
-            os: macos-10.15
+          - name: MacOS 11
+            os: macos-11
+            host_executable_suffix: ""
+          - name: MacOS 12
+            os: macos-12
             host_executable_suffix: ""
         cmake-build-type: [ Debug, Release ]
 
